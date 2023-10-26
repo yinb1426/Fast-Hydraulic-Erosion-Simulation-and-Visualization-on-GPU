@@ -4,13 +4,13 @@ import taichi.math as tm
 ti.init(arch=ti.gpu)
 
 # 这一套参数，效果OK
-sizeX = 512     # 格网尺寸X
-sizeY = 512     # 格网尺寸Y
+sizeX = 1024     # 格网尺寸X
+sizeY = 1024     # 格网尺寸Y
 deltaT = 0.05    # 时间间隔(很有影响)
 pipeLength = 1  # 管道长度
 gravity = 9.8
 rainfallRate = 0.1      # 降雨速率
-rainfallBoundary = [180, 380, 180, 380]     # 降雨速率遮罩边界：左，右，下，上
+rainfallBoundary = [280, 780, 280, 780]     # 降雨速率遮罩边界：左，右，下，上
 waterTopHeight = 150.0      # 水面顶部高度
 heightData = []
 Kc = 0.01
@@ -238,7 +238,7 @@ def DrawSedimentHeight():
             [sedimentHeight[x, y]/50.0, sedimentHeight[x, y]/50.0, sedimentHeight[x, y]/50.0])
 
 if __name__ == "__main__":
-    heightFile = open("E:/Desktop/Height512x512.txt", "r")
+    heightFile = open("HeightMap/Height1024x1024.txt", "r")
     for line in heightFile:
         data = line.split(' ')[:-1]
         heightData.append(list(map(float, data)))
@@ -250,7 +250,7 @@ if __name__ == "__main__":
     GenerateRainfall()
     InitOutputFlow()
     DrawHeight()
-    while True:
+    while gui.running:
         WaterIncrement()
         UpdateOutputFlow()
         UpdateVelocityAndWaterHeight()
